@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0a3vcve" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.52.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.24.0">
+  <bpmn:process id="Process_1xa8bbf" isExecutable="true" camunda:historyTimeToLive="180">
+    <bpmn:startEvent id="StartEvent_1" name="Pesanan Dibuat">
+      <bpmn:outgoing>Flow_1lp2lqm</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1lp2lqm" sourceRef="StartEvent_1" targetRef="Activity_041hw2t" />
+    <bpmn:userTask id="Activity_041hw2t" name="Validasi Stok">
+      <bpmn:incoming>Flow_1lp2lqm</bpmn:incoming>
+      <bpmn:outgoing>Flow_156nzxd</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1to29b0" name="Stok Ada?">
+      <bpmn:incoming>Flow_156nzxd</bpmn:incoming>
+      <bpmn:outgoing>Flow_1d4z2ap</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0tgtivw</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_156nzxd" sourceRef="Activity_041hw2t" targetRef="Gateway_1to29b0" />
+    <bpmn:endEvent id="Event_0800j14" name="Pesanan Diproses">
+      <bpmn:incoming>Flow_1d4z2ap</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="Event_19uxjh0" name="Pesanan Dibatalkan">
+      <bpmn:incoming>Flow_0tgtivw</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1d4z2ap" name="Ya" sourceRef="Gateway_1to29b0" targetRef="Event_0800j14">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${stokAda == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0tgtivw" name="tidak" sourceRef="Gateway_1to29b0" targetRef="Event_19uxjh0">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${stokAda == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1xa8bbf">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="161" y="205" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_027mo2d_di" bpmnElement="Activity_041hw2t">
+        <dc:Bounds x="270" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1to29b0_di" bpmnElement="Gateway_1to29b0" isMarkerVisible="true">
+        <dc:Bounds x="415" y="155" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="474.5" y="173" width="51" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19uxjh0_di" bpmnElement="Event_19uxjh0">
+        <dc:Bounds x="502" y="212" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="494" y="255" width="52" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0800j14_di" bpmnElement="Event_0800j14">
+        <dc:Bounds x="502" y="92" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="476" y="135" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1lp2lqm_di" bpmnElement="Flow_1lp2lqm">
+        <di:waypoint x="218" y="180" />
+        <di:waypoint x="270" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_156nzxd_di" bpmnElement="Flow_156nzxd">
+        <di:waypoint x="370" y="180" />
+        <di:waypoint x="415" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1d4z2ap_di" bpmnElement="Flow_1d4z2ap">
+        <di:waypoint x="440" y="155" />
+        <di:waypoint x="440" y="110" />
+        <di:waypoint x="502" y="110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="449" y="129.5" width="13" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0tgtivw_di" bpmnElement="Flow_0tgtivw">
+        <di:waypoint x="440" y="205" />
+        <di:waypoint x="440" y="230" />
+        <di:waypoint x="502" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="443" y="214.5" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
